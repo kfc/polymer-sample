@@ -1,0 +1,23 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<script src="/scripts/filter-date.js"></script>
+<polymer-element name="uql-hold-item" attributes="item view">
+
+  <template>
+    <style>
+      .datePlaced {
+        font-size: 14px;
+        color: #818181;
+      }
+    </style>
+    {{ item.title }}
+    <div class="datePlaced">(Date Placed: {{ item.datePlaced | date('dd/MM/yyyy') }})</div>
+  </template>
+
+  <script>
+    Polymer('uql-hold-item', {
+      view : 'full'
+    });
+
+  </script>
+
+</polymer-element>

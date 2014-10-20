@@ -1,0 +1,20 @@
+<polymer-element name="uql-loans" attributes="loans">
+
+
+  <template>
+    <paper-item icon="alarm" label="{{ loans.length }} loans" on-click="{{toggleView}}"></paper-item>
+  </template>
+
+  <script>
+    Polymer({
+
+      toggleView : function(event, detail, sender) {
+        this.fire('toggle-view', {source : 'loans'});
+        return false;
+      }
+
+    });
+
+  </script>
+
+</polymer-element>

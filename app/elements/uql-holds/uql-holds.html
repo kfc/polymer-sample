@@ -1,0 +1,61 @@
+<link rel="import" href="../uql-hold-item/uql-hold-item.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<polymer-element name="uql-holds" attributes="holds view">
+  <template>
+
+    <style>
+
+      #teaser paper-item {
+        background-color: #ffcbbb;
+        border-radius: 5px;
+      }
+
+      ul#holdsList {
+        -webkit-padding-start: 20px;
+      }
+
+      ul#holdsList li {
+        margin-bottom: 15px;
+      }
+
+    </style>
+
+    <div id="teaser" hidden?="{{view != 'teaser'}}">
+      <paper-item icon="lock" on-click="{{toggleView}}" horizontal>
+        <span flex>I have {{ holds.length }} holds</span>
+        <core-icon icon="chevron-right" horizontal layout end></core-icon>
+      </paper-item>
+    </div>
+
+    <div id="full" hidden?="{{view != 'full'}}">
+
+      <div id="holdsExist" block?="{{ holds.length > 0 }}">
+        My holds ({{ holds.length }})
+        <ul id="holdsList">
+          <template repeat="{{ hold in holds }}">
+            <li>
+              <uql-hold-item item="{{hold}}" view="{{view}}"></uql-hold-item>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer('uql-holds', {
+      view : 'full',
+
+      toggleView : function(event, detail, sender) {
+        this.fire('toggle-view', {source : 'holds'});
+        return false;
+      }
+
+    });
+
+  </script>
+
+</polymer-element>

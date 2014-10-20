@@ -1,0 +1,23 @@
+<polymer-element name="uql-fines" attributes="fines template">
+
+
+  <template>
+    <paper-item icon="error" label="My fines are: {{ fines | moneyFormat }}" on-click="{{toggleView}}"></paper-item>
+  </template>
+
+  <script>
+    Polymer({
+
+      toggleView : function(event, detail, sender) {
+        this.fire('toggle-view', {source : 'fines'});
+        return false;
+      },
+
+      moneyFormat: function(value) {
+        return '$' + parseFloat(value).toFixed(2);
+      }
+    });
+
+  </script>
+
+</polymer-element>

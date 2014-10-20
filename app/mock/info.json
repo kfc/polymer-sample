@@ -1,5 +1,53 @@
 {
-    "holds" : 2,
-    "loans": 4,
-    "fines": 2.0
+  "checkedOut": [
+    {
+      "title": "Pharmaceutics : the science of dosage form design",
+      "dueDate": "2014-05-06T04:00:00+10:00",
+      "url": "http:\/\/library.uq.edu.au\/record=i3349004"
+    },
+    {
+      "title": "Physicochemical principles of pharmacy",
+      "dueDate": "2014-05-06T04:00:00+10:00",
+      "url": "http:\/\/library.uq.edu.au\/record=i3715828"
+    }
+  ],
+  "holds": [
+    {
+      "title": "Regression analysis of count data",
+      "datePlaced": "2014-04-30T14:00:00+10:00",
+      "url": "http:\/\/library.uq.edu.au\/record=i2673780"
+    },
+    {
+      "title": "Regression analysis of count data. Part 2",
+      "datePlaced": "2014-02-12T14:00:00+10:00",
+      "url": "http:\/\/library.uq.edu.au\/record=i2673780"
+    },
+    {
+      "title": "Image processing",
+      "datePlaced": "2013-12-30T14:00:00+10:00",
+      "url": "http:\/\/library.uq.edu.au\/record=i2673780"
+    },
+    {
+      "title": "Regression analysis of count data",
+      "datePlaced": "2014-04-30T14:00:00+10:00",
+      "url": "http:\/\/library.uq.edu.au\/record=i2673780"
+    }
+  ],
+  "fines": [
+    {
+      "title": "Human physiology : from cells to systems \/ Lauralee Sherwood.",
+      "fineAmount": 840,
+      "dueDate": "2014-04-08T04:00:00+10:00",
+      "dateReturned": "2014-04-14T14:02:05+10:00",
+      "url": "http:\/\/library.uq.edu.au\/record=i3698283"
+    },
+    {
+      "title": "Human physiology : from cells to systems \/ Lauralee Sherwood.",
+      "fineAmount": 160,
+      "dueDate": "2014-04-22T04:00:00+10:00",
+      "dateReturned": "2014-04-24T14:44:15+10:00",
+      "url": "http:\/\/library.uq.edu.au\/record=i3704585"
+    }
+  ],
+  "retrievedAt": "2014-05-02T09:11:52+10:00"
 }
