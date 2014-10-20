@@ -17,48 +17,36 @@
 
 <polymer-element name="uql-info" layout center attributes="apiUrl">
   <template>
+
     <core-ajax auto url="{{ apiUrl }}"
                params=''
                id="ajax"
                handleAs="json" on-core-response="{{ infoLoaded }}"></core-ajax>
+
+    <link rel="stylesheet" href="/styles/uql-info.css">
     <style>
       :host {
         display: block;
         padding: 0px;
         max-width: 350px;
-        height: 350px;
       }
-
       core-header-panel {
-        height: 100%;
-        border-radius: 5%;
+        border-radius: 5px;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
-        background: #E5E5E5;
+        background: #FFFFFF;
+        border: 1px solid #03a9f4;
+        max-height: 400px;
+        height: 275px;
       }
       core-toolbar {
         background: #03a9f4;
         color: white;
-
-      }
-      paper-tabs {
-        background: #03a9f4;
-      }
-
-      .infoWrapper {
-        padding: 20px;
+        display: block;
 
       }
 
-      #overviewList {
-        -webkit-padding-start: 20px;
-      }
-
-      #overviewList li{
-        height: 40px;
-
-      }
-      #tabs {
+      paper-tabs#tabs {
         width: 100%;
         margin: 0;
         -webkit-user-select: none;
@@ -66,15 +54,34 @@
         -ms-user-select: none;
         user-select: none;
         text-transform: uppercase;
+        background: #03a9f4;
+        display: block;
       }
 
-      section#overview uql-holds {
-        background: red;
+      .infoWrapper {
       }
+
+      #overviewList {
+        -webkit-padding-start: 20px;
+      }
+
+      #overviewList li{
+      }
+
+
+      #overview div:nth-child(odd){
+        background-color: #FFF;
+      }
+      #overview div:nth-child(even){
+        background-color: #f5f5f5;
+      }
+
+
 
     </style>
 
-    <core-header-panel>
+    <core-header-panel vertival layout>
+      <div>
       <core-toolbar>
         <paper-tabs id="tabs" selected="{{ selectedTab }}" on-core-select="{{ tabSelected }}">
           <paper-tab name="overview" id="overview">Overview</paper-tab>
@@ -83,14 +90,21 @@
           <paper-tab name="fines" id="fines">Fines</paper-tab>
         </paper-tabs>
       </core-toolbar>
+      </div>
 
       <div class="infoWrapper">
-        <core-animated-pages id="animatedPages" transitions="slide-from-right">
+        <core-animated-pages id="animatedPages" transitions="slide-from-right" block>
 
           <section id="overview" name="overview" hidden?="{{ selectedTab != 'overview' }}">
-            <uql-holds id="holds" holds="{{ holds }}" view="teaser"></uql-holds>
-            <uql-loans rel="tab" loans="{{ loans }}"></uql-loans>
-            <uql-fines fines="{{ fines }}"></uql-fines>
+          <div>
+            <uql-holds holds="{{ holds }}" view="teaser"></uql-holds>
+          </div>
+          <div>
+            <uql-loans loans="{{ loans }}" view="teaser"></uql-loans>
+          </div>
+          <div>
+            <uql-fines fines="{{ fines }}" view="teaser"></uql-fines>
+          </div>
           </section>
 
           <section id="holds" name="holds" class="holds" hidden?="{{ selectedTab != 'holds' }}">
@@ -101,7 +115,7 @@
             <uql-loans loans="{{ loans }}"></uql-loans>
           </section>
 
-          <section id="fines" name="fines" class="loans"  class="fines" hidden?="{{ selectedTab != 'fines' }}">
+          <section id="fines" name="fines" class="fines" hidden?="{{ selectedTab != 'fines' }}">
             <uql-fines fines="{{ fines }}"></uql-fines>
           </section>
 
@@ -120,7 +134,7 @@
       infoLoaded : function() {
         var response = this.$.ajax.response;
         this.holds = (response.holds ? response.holds : []);
-        this.loans = (response.chekedOut ? response.chekedOut : []);
+        this.loans = (response.checkedOut ? response.checkedOut : []);
         this.fines = (response.fines ? response.fines : []);
         console.log(response);
       },
@@ -136,10 +150,6 @@
           tabs.selected = e.detail.source;
         });
       },
-
-      changeTab : function (event, details, sender) {
-        this.selectedTab = 'loans';
-      }
     });
   </script>
 

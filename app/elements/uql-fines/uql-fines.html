@@ -1,4 +1,83 @@
-<polymer-element name="uql-fines" attributes="fines template">
+<link rel="import" href="uql-fine-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<polymer-element name="uql-fines">
+
+  <template>
+    <link rel="stylesheet" href="/styles/uql-info.css">
+    <style>
+
+
+    </style>
+
+    <div id="teaser" hidden?="{{view != 'teaser'}}">
+    <paper-item icon="error" on-click="{{toggleView}}">
+      <span flex>My fines are: {{ calculateFines(fines) | moneyFormat }}</span>
+      <core-icon icon="chevron-right" horizontal layout end></core-icon>
+    </paper-item>
+    </div>
+
+    <div id="full" hidden?="{{view != 'full'}}">
+
+    <div id="finesExist" block?="{{ fines.length > 0 }}">
+    My loans ({{ loans.length }})
+    <ul id="finesList">
+      <template repeat="{{ fine in fines }}">
+        <li>
+          <uql-fine-item item="{{fine}}" view="{{view}}"></uql-fine-item>
+        </li>
+      </template>
+    </ul>
+    </div>
+    </div>
+
+
+  </template>
+
+  <script>
+    Polymer('uql-fines', {
+      publish : {
+        fines : {
+          value : [],
+          reflect : true
+        },
+        finesSum : 0,
+        view : 'full'
+
+      },
+      toggleView : function(event, detail, sender) {
+        this.fire('toggle-view', {source : 'fines'});
+        return false;
+      },
+
+      ready : function() {
+        this.calculateFines(this.fines);
+      },
+
+      calculateFines : function(fines) {
+        if(fines.length > 0) {
+          for(var i=0; i < this.fines.length; i++){
+            if(fines[i].fineAmount) {
+              this.finesSum += parseInt(fines[i].fineAmount);
+            }
+          }
+        }
+        return this.finesSum;
+      },
+
+      moneyFormat: function(value) {
+        return '$' + parseFloat(value).toFixed(2);
+      }
+
+
+    });
+
+  </script>
+
+</polymer-element>
+
+
+  <!--
+  <polymer-element name="uql-fines" attributes="fines template">
 
 
   <template>
@@ -21,3 +100,6 @@
   </script>
 
 </polymer-element>
+
+
+  -->

@@ -1,12 +1,40 @@
-<polymer-element name="uql-loans" attributes="loans">
-
+<link rel="import" href="uql-loan-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<polymer-element name="uql-loans" attributes="loans view">
 
   <template>
-    <paper-item icon="alarm" label="{{ loans.length }} loans" on-click="{{toggleView}}"></paper-item>
+    <link rel="stylesheet" href="/styles/uql-info.css">
+    <style>
+
+      
+    </style>
+
+    <div id="teaser" hidden?="{{view != 'teaser'}}">
+      <paper-item icon="alarm" on-click="{{toggleView}}" horizontal>
+        <span flex>I have {{ loans.length }} loans</span>
+        <core-icon icon="chevron-right" horizontal layout end></core-icon>
+      </paper-item>
+    </div>
+
+    <div id="full" hidden?="{{view != 'full'}}">
+
+    <div id="loansExist" block?="{{ loans.length > 0 }}">
+    My loans ({{ loans.length }})
+    <ul id="loansList">
+      <template repeat="{{ loan in loans }}">
+        <li>
+          <uql-loan-item item="{{loan}}" view="{{view}}"></uql-loan-item>
+        </li>
+      </template>
+    </ul>
+    </div>
+    </div>
+
+
   </template>
 
   <script>
-    Polymer({
+    Polymer('uql-loans', {
 
       toggleView : function(event, detail, sender) {
         this.fire('toggle-view', {source : 'loans'});
