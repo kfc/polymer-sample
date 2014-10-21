@@ -1,5 +1,8 @@
 <link rel="import" href="uql-fine-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog-transition.html">
 <polymer-element name="uql-fines">
 
   <template>
@@ -11,26 +14,37 @@
 
     <div id="teaser" hidden?="{{view != 'teaser'}}">
     <paper-item icon="error" on-click="{{toggleView}}">
-      <span flex>My fines are: {{ calculateFines(fines) | moneyFormat }}</span>
+      <span flex>My fines ({{ calculateFines(fines) | moneyFormat }})</span>
       <core-icon icon="chevron-right" horizontal layout end></core-icon>
     </paper-item>
     </div>
 
-    <div id="full" hidden?="{{view != 'full'}}">
 
-    <div id="finesExist" block?="{{ fines.length > 0 }}">
-    My loans ({{ loans.length }})
-    <ul id="finesList">
-      <template repeat="{{ fine in fines }}">
-        <li>
-          <uql-fine-item item="{{fine}}" view="{{view}}"></uql-fine-item>
-        </li>
-      </template>
-    </ul>
+    <div id="full" hidden?="{{view != 'full' && view != 'details'}}">
+
+      <!--<core-animated-pages id="animatedFinesPages" transitions="slide-from-right">-->
+        <section name="list" hidden?="{{view != 'full'}}">
+          <div class="itemsList" block?="{{ fines.length > 0 }}">
+            <template repeat="{{ fine in fines }}">
+              <div class="listItem">
+                <uql-fine-item on-click="{{onSelect}}" item="{{fine}}" view="{{view}}"></uql-fine-item>
+              </div>
+            </template>
+          </div>
+        </section>
+
+        <section id="details" name="details" vertical>
+        <paper-dialog id="dialog" heading="Title for dialog" transition="paper-dialog-transition-center">
+          <uql-fine-item flex id="itemDetails" item="{{fine}}" view="{{view}}">
+            <paper-button end-justified id="closeButton" raised="" on-click="{{onSelect}}">
+              <core-icon icon="close"></core-icon>Close
+            </paper-button>
+          </uql-fine-item>
+</paper-dialog>
+        </section>
+
+      <!--</core-animated-pages>-->
     </div>
-    </div>
-
-
   </template>
 
   <script>
@@ -51,9 +65,24 @@
 
       ready : function() {
         this.calculateFines(this.fines);
+
+      },
+
+      onSelect : function(event, detail, sender) {
+        //this.$.animatedFinesPages.selected = 'details';
+        //this.view = 'details';
+        //this.$.itemDetails.view = 'details';
+        this.$.itemDetails.item = sender.item;
+        this.$.dialog.toggle();
+      },
+
+      goBack : function() {
+        //this.$.animatedFinesPages.selected = 'list';
+        //this.view = 'full';
       },
 
       calculateFines : function(fines) {
+        this.finesSum = 0;
         if(fines.length > 0) {
           for(var i=0; i < this.fines.length; i++){
             if(fines[i].fineAmount) {
@@ -63,43 +92,13 @@
         }
         return this.finesSum;
       },
-
       moneyFormat: function(value) {
-        return '$' + parseFloat(value).toFixed(2);
+        return '$' + (parseFloat(value) / 100) .toFixed(2);
       }
-
-
     });
+
+
 
   </script>
 
 </polymer-element>
-
-
-  <!--
-  <polymer-element name="uql-fines" attributes="fines template">
-
-
-  <template>
-    <paper-item icon="error" label="My fines are: {{ fines | moneyFormat }}" on-click="{{toggleView}}"></paper-item>
-  </template>
-
-  <script>
-    Polymer({
-
-      toggleView : function(event, detail, sender) {
-        this.fire('toggle-view', {source : 'fines'});
-        return false;
-      },
-
-      moneyFormat: function(value) {
-        return '$' + parseFloat(value).toFixed(2);
-      }
-    });
-
-  </script>
-
-</polymer-element>
-
-
-  -->

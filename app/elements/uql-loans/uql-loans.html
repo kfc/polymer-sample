@@ -4,30 +4,21 @@
 
   <template>
     <link rel="stylesheet" href="/styles/uql-info.css">
-    <style>
-
-      
-    </style>
-
     <div id="teaser" hidden?="{{view != 'teaser'}}">
       <paper-item icon="alarm" on-click="{{toggleView}}" horizontal>
-        <span flex>I have {{ loans.length }} loans</span>
+        <span flex>My loans ({{ loans.length }})</span>
         <core-icon icon="chevron-right" horizontal layout end></core-icon>
       </paper-item>
     </div>
 
     <div id="full" hidden?="{{view != 'full'}}">
-
-    <div id="loansExist" block?="{{ loans.length > 0 }}">
-    My loans ({{ loans.length }})
-    <ul id="loansList">
-      <template repeat="{{ loan in loans }}">
-        <li>
-          <uql-loan-item item="{{loan}}" view="{{view}}"></uql-loan-item>
-        </li>
-      </template>
-    </ul>
-    </div>
+      <div class="itemsList" block?="{{ loans.length > 0 }}">
+        <template repeat="{{ loan in loans }}">
+          <div class="listItem">
+            <uql-loan-item item="{{loan}}" view="{{view}}"></uql-loan-item>
+          </div>
+        </template>
+      </div>
     </div>
 
 

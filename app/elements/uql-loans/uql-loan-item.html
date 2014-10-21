@@ -1,13 +1,17 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <script src="/scripts/filter-date.js"></script>
 <polymer-element name="uql-loan-item" attributes="item view">
-
   <template>
     <link rel="stylesheet" href="/styles/uql-info.css">
-    {{ item.title }}
-    <div class="datePlaced">(Due Date: {{ item.dueDate | date('dd/MM/yyyy') }})</div>
+    <paper-item horizontal>
+        <span flex>
+          <div class="itemPrimaryText">{{ item.title }}</div>
+          <div class="itemSecondaryText">Due Date: {{ item.dueDate | date('dd/MM/yyyy') }}</div>
+        </span>
+      <core-icon hidden icon="chevron-right" horizontal layout end></core-icon>
+    </paper-item>
   </template>
-
   <script>
     Polymer('uql-loan-item', {
       view : 'full'

@@ -28,7 +28,7 @@
       :host {
         display: block;
         padding: 0px;
-        max-width: 350px;
+        height: 100%;
       }
       core-header-panel {
         border-radius: 5px;
@@ -37,13 +37,16 @@
         background: #FFFFFF;
         border: 1px solid #03a9f4;
         max-height: 400px;
-        height: 275px;
+        height: 100%;
       }
       core-toolbar {
-        background: #03a9f4;
+        background: #3f51b5;
         color: white;
         display: block;
+        padding: 0px;
+      }
 
+      paper-tab {
       }
 
       paper-tabs#tabs {
@@ -54,9 +57,11 @@
         -ms-user-select: none;
         user-select: none;
         text-transform: uppercase;
-        background: #03a9f4;
+        font-size: 12px;
         display: block;
       }
+
+
 
       .infoWrapper {
       }
@@ -80,43 +85,41 @@
 
     </style>
 
-    <core-header-panel vertival layout>
-      <div>
+    <core-header-panel vertival layout mode="waterfall">
       <core-toolbar>
         <paper-tabs id="tabs" selected="{{ selectedTab }}" on-core-select="{{ tabSelected }}">
           <paper-tab name="overview" id="overview">Overview</paper-tab>
-          <paper-tab name="holds" id="holds">Holds</paper-tab>
-          <paper-tab name="loans" id="loans">Loans</paper-tab>
-          <paper-tab name="fines" id="fines">Fines</paper-tab>
+          <paper-tab name="loans" id="loans">Loans <span class="subtext">({{ loans.length }})</span></paper-tab>
+          <paper-tab name="holds" id="holds">Holds <span class="subtext">{{ holds.length }}</span></paper-tab>
+          <paper-tab name="fines" id="fines">Fines <span class="subtext">{{ sumFines }}</span></paper-tab>
         </paper-tabs>
       </core-toolbar>
-      </div>
 
       <div class="infoWrapper">
-        <core-animated-pages id="animatedPages" transitions="slide-from-right" block>
+        <core-animated-pages id="animatedPages" transitions="slide-from-right" block on-core-animated-pages-transition-end="{{transitionEnd}}">
 
-          <section id="overview" name="overview" hidden?="{{ selectedTab != 'overview' }}">
-          <div>
-            <uql-holds holds="{{ holds }}" view="teaser"></uql-holds>
-          </div>
-          <div>
-            <uql-loans loans="{{ loans }}" view="teaser"></uql-loans>
-          </div>
-          <div>
-            <uql-fines fines="{{ fines }}" view="teaser"></uql-fines>
-          </div>
-          </section>
-
-          <section id="holds" name="holds" class="holds" hidden?="{{ selectedTab != 'holds' }}">
-            <uql-holds holds="{{ holds }}"></uql-holds>
+          <section id="overview" name="overview" hidden?="{{ selectedTab != 'overview'}}">
+            <div>
+              <uql-loans loans="{{ loans }}" view="teaser"></uql-loans>
+            </div>
+            <div>
+              <uql-holds holds="{{ holds }}" view="teaser"></uql-holds>
+            </div>
+            <div>
+              <uql-fines id="finesTeaser" fines="{{ fines }}" view="teaser"></uql-fines>
+            </div>
           </section>
 
           <section id="loans" name="loans" class="loans" hidden?="{{ selectedTab != 'loans' }}">
             <uql-loans loans="{{ loans }}"></uql-loans>
           </section>
 
+          <section id="holds" name="holds" class="holds" hidden?="{{ selectedTab != 'holds' }}">
+            <uql-holds holds="{{ holds }}"></uql-holds>
+          </section>
+
           <section id="fines" name="fines" class="fines" hidden?="{{ selectedTab != 'fines' }}">
-            <uql-fines fines="{{ fines }}"></uql-fines>
+            <uql-fines id="finesFull" view="full" fines="{{ fines }}"></uql-fines>
           </section>
 
         </core-animated-pages>
@@ -127,8 +130,8 @@
 
   <script>
     Polymer('uql-info', {
-
       apiUrl : '../../mock/info.json',
+      sumFines : 0,
 
       selectedTab : 'overview',
       infoLoaded : function() {
@@ -136,6 +139,8 @@
         this.holds = (response.holds ? response.holds : []);
         this.loans = (response.checkedOut ? response.checkedOut : []);
         this.fines = (response.fines ? response.fines : []);
+        this.sumFines = this.$.finesTeaser.moneyFormat(this.$.finesTeaser.calculateFines(this.fines));
+
         console.log(response);
       },
 
@@ -149,7 +154,8 @@
         this.$.overview.addEventListener('toggle-view', function(e) {
           tabs.selected = e.detail.source;
         });
-      },
+      }
+
     });
   </script>
 
