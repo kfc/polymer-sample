@@ -35,61 +35,27 @@
   ],
   "fines": [
     {
-      "title": "Human physiology : from cells to systems \/ Lauralee Sherwood.",
+      "title": "1. Human physiology : from cells to systems \/ Lauralee Sherwood.",
       "fineAmount": 840,
       "dueDate": "2014-04-08T04:00:00+10:00",
       "dateReturned": "2014-04-14T14:02:05+10:00",
       "url": "http:\/\/library.uq.edu.au\/record=i3698283"
     },
     {
-      "title": "Human physiology : from cells to systems \/ Lauralee Sherwood.",
+      "title": "2. Human physiology : from cells to systems \/ Lauralee Sherwood.",
       "fineAmount": 160,
       "dueDate": "2014-04-22T04:00:00+10:00",
       "dateReturned": "2014-04-24T14:44:15+10:00",
       "url": "http:\/\/library.uq.edu.au\/record=i3704585"
     },
     {
-      "title": "Human physiology : from cells to systems \/ Lauralee Sherwood.",
-      "fineAmount": 840,
+      "title": "3. Human physiology : from cells to systems \/ Lauralee Sherwood.",
+      "fineAmount": 340,
       "dueDate": "2014-04-08T04:00:00+10:00",
       "dateReturned": "2014-04-14T14:02:05+10:00",
       "url": "http:\/\/library.uq.edu.au\/record=i3698283"
-    },
-    {
-      "title": "Human physiology : from cells to systems \/ Lauralee Sherwood.",
-      "fineAmount": 160,
-      "dueDate": "2014-04-22T04:00:00+10:00",
-      "dateReturned": "2014-04-24T14:44:15+10:00",
-      "url": "http:\/\/library.uq.edu.au\/record=i3704585"
-    },
-    {
-      "title": "Human physiology : from cells to systems \/ Lauralee Sherwood.",
-      "fineAmount": 840,
-      "dueDate": "2014-04-08T04:00:00+10:00",
-      "dateReturned": "2014-04-14T14:02:05+10:00",
-      "url": "http:\/\/library.uq.edu.au\/record=i3698283"
-    },
-    {
-      "title": "Human physiology : from cells to systems \/ Lauralee Sherwood.",
-      "fineAmount": 160,
-      "dueDate": "2014-04-22T04:00:00+10:00",
-      "dateReturned": "2014-04-24T14:44:15+10:00",
-      "url": "http:\/\/library.uq.edu.au\/record=i3704585"
-    },
-    {
-      "title": "Human physiology : from cells to systems \/ Lauralee Sherwood.",
-      "fineAmount": 840,
-      "dueDate": "2014-04-08T04:00:00+10:00",
-      "dateReturned": "2014-04-14T14:02:05+10:00",
-      "url": "http:\/\/library.uq.edu.au\/record=i3698283"
-    },
-    {
-      "title": "Human physiology : from cells to systems \/ Lauralee Sherwood.",
-      "fineAmount": 160,
-      "dueDate": "2014-04-22T04:00:00+10:00",
-      "dateReturned": "2014-04-24T14:44:15+10:00",
-      "url": "http:\/\/library.uq.edu.au\/record=i3704585"
     }
+
   ],
   "retrievedAt": "2014-05-02T09:11:52+10:00"
 }

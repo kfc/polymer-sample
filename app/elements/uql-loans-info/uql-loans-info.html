@@ -1,21 +1,20 @@
-<link rel="import" href="/bower_components/polymer/polymer.html">
-<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
-<link rel="import" href="/bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="/bower_components/paper-tabs/paper-tab.html">
-<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="/bower_components/core-header-panel/core-header-panel.html">
-<link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
-<link rel="import" href="/bower_components/core-icons/core-icons.html">
-<link rel="import" href="/bower_components/core-animated-pages/core-animated-pages.html">
-<link rel="import" href="/bower_components/core-animated-pages/transitions/slide-from-right.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-from-right.html">
 
 
-<link rel="import" href="../../elements/uql-holds/uql-holds.html">
-<link rel="import" href="../../elements/uql-fines/uql-fines.html">
-<link rel="import" href="../../elements/uql-loans/uql-loans.html">
+<link rel="import" href="uql-holds.html">
+<link rel="import" href="uql-fines.html">
+<link rel="import" href="uql-loans.html">
 
 
-<polymer-element name="uql-info" layout center attributes="apiUrl">
+<polymer-element name="uql-loans-info" layout center attributes="apiUrl">
   <template>
 
     <core-ajax auto url="{{ apiUrl }}"
@@ -23,72 +22,11 @@
                id="ajax"
                handleAs="json" on-core-response="{{ infoLoaded }}"></core-ajax>
 
-    <link rel="stylesheet" href="/styles/uql-info.css">
-    <style>
-      :host {
-        display: block;
-        padding: 0px;
-        height: 100%;
-      }
-      core-header-panel {
-        border-radius: 5px;
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
-        background: #FFFFFF;
-        border: 1px solid #03a9f4;
-        max-height: 400px;
-        height: 100%;
-      }
-      core-toolbar {
-        background: #3f51b5;
-        color: white;
-        display: block;
-        padding: 0px;
-      }
-
-      paper-tab {
-      }
-
-      paper-tabs#tabs {
-        width: 100%;
-        margin: 0;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        text-transform: uppercase;
-        font-size: 12px;
-        display: block;
-      }
-
-
-
-      .infoWrapper {
-      }
-
-      #overviewList {
-        -webkit-padding-start: 20px;
-      }
-
-      #overviewList li{
-      }
-
-
-      #overview div:nth-child(odd){
-        background-color: #FFF;
-      }
-      #overview div:nth-child(even){
-        background-color: #f5f5f5;
-      }
-
-
-
-    </style>
-
+    <link rel="stylesheet" href="uql-loans-info.css">
     <core-header-panel vertival layout mode="waterfall">
       <core-toolbar>
         <paper-tabs id="tabs" selected="{{ selectedTab }}" on-core-select="{{ tabSelected }}">
-          <paper-tab name="overview" id="overview">Overview</paper-tab>
+          <!--<paper-tab name="overview" id="overview">Overview</paper-tab>-->
           <paper-tab name="loans" id="loans">Loans <span class="subtext">({{ loans.length }})</span></paper-tab>
           <paper-tab name="holds" id="holds">Holds <span class="subtext">{{ holds.length }}</span></paper-tab>
           <paper-tab name="fines" id="fines">Fines <span class="subtext">{{ sumFines }}</span></paper-tab>
@@ -129,7 +67,7 @@
   </template>
 
   <script>
-    Polymer('uql-info', {
+    Polymer('uql-loans-info', {
       apiUrl : '../../mock/info.json',
       sumFines : 0,
 
@@ -140,13 +78,12 @@
         this.loans = (response.checkedOut ? response.checkedOut : []);
         this.fines = (response.fines ? response.fines : []);
         this.sumFines = this.$.finesTeaser.moneyFormat(this.$.finesTeaser.calculateFines(this.fines));
-
-        console.log(response);
       },
 
       tabSelected : function() {
         this.selectedTab = this.$.tabs.selected;
         this.$.animatedPages.selected = this.$.tabs.selected;
+        this.fire('tab-changed');
       },
 
       ready: function() {
